@@ -1,30 +1,31 @@
-import React, { useState } from 'react'
-import { useSpring, animated } from 'react-spring'
+import React, { useState } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 const Checkout = ({ isOpen }) => {
   const { x } = useSpring({
-    x: isOpen ? 100 : 0
-  })
-
+    x: isOpen ? 0 : 100
+  });
   return (
     <div
-      className='checkout'
-      style={{ pointerEvents: isOpen ? 'none' : 'all' }}
+      className="checkout"
+      style={{
+        pointerEvents: isOpen ? 'all' : 'none'
+      }}
     >
       <animated.div
-        className='checkout-left'
         style={{
-          transform: x.interpolate(x => `translate3d(-${x}%,0,0)`)
+          transform: x.interpolate(x => `translate3d(${x * -1}%, 0, 0)`)
         }}
-      ></animated.div>
+        className="checkout-left"
+      />
       <animated.div
-        className='checkout-right'
         style={{
-          transform: x.interpolate(x => `translate3d(${x}%,0,0)`)
+          transform: x.interpolate(x => `translate3d(${x}%, 0, 0)`)
         }}
-      ></animated.div>
+        className="checkout-right"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;

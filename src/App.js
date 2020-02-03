@@ -1,41 +1,40 @@
-import React, { useState } from 'react'
-import { useSpring, animated } from 'react-spring'
-import Toggle from './Toggle'
-import logo from './logo.svg'
-import Nav from './Nav'
-import Checkout from './Checkout'
-import './App.css'
+import React, { useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+import Routes from './Routes';
+import Nav from './Nav';
+import Checkout from './Checkout';
+import logo from './logo.svg';
+import './App.css';
 
 const App = () => {
-  const [navOpen, setNavOpen] = useState(false)
+  const [isNavOpen, setNavOpen] = useState(false);
+  const navAnimation = useSpring({
+    transform: isNavOpen
+      ? `translate3d(0,0,0) scale(1)`
+      : `translate3d(100%,0,0) scale(0.6)`
+  });
   const fade = useSpring({
     from: {
       opacity: 0
     },
     opacity: 1
-  })
-
-  const navEffect = useSpring({
-    transform: navOpen
-      ? 'translate3d(0,0,0) scale(1)'
-      : 'translate3d(100%,-100%,0) scale(0.6)'
-  })
+  });
 
   return (
-    <animated.div className='App' style={fade}>
-      <header className='App-header'>
-        <img src={logo} alt='boo' className='logo' />
-        <button className='menu-button' onClick={() => setNavOpen(!navOpen)}>
+    <animated.div className="App" style={fade}>
+      <header className="App-header">
+        <img src={logo} className="logo" />
+        <button onClick={() => setNavOpen(!isNavOpen)} className="menu-button">
           Menu
         </button>
-        {/* <Nav animation={navEffect} /> */}
+        {/* <Nav style={navAnimation} /> */}
       </header>
       <main>
-        <Toggle />
-        <Checkout isOpen={navOpen} />
+        <Routes />
       </main>
+      <Checkout isOpen={isNavOpen} />
     </animated.div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
